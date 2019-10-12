@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<changelog xmlns="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
+    <changeset id="CREATE_PRIVILEGES" author="jonathan.camargo">
+        <query>CREATE (p:Privilege {name:'MODIFY_H', description:'Modify the H elements'})</query>
+        <query>CREATE (p:Privilege {name:'DELETE_H', description:'Delete an H elements'})</query>
+        <query>CREATE (p:Privilege {name:'MODIFY_TAGS', description:'Modify the Tags elements'})</query>
+        <query>CREATE (p:Privilege {name:'DELETE_TAGS', description:'Delete Tags'})</query>
+        <query>CREATE (p:Privilege {name:'MODIFY_TYPES', description:'Modify the Types elements'})</query>
+        <query>CREATE (p:Privilege {name:'DELETE_TYPES', description:'Delete types'})</query>
+    </changeset>
+
+    <changeset id="CREATE_ROLES" author="jonathan.camargo">
+        <query>CREATE (r:Role {name:'ROLE_USER'})</query>
+
+        <query>CREATE (r:Role {name:'ROLE_EDITOR'})</query>
+        <query>MATCH (p:Privilege {name: 'MODIFY_H'}), (r:Role {name: 'ROLE_EDITOR'}) CREATE (r) -[:HAS_ACCESS_TO {order: 0}]-> (p)</query>
+        <query>MATCH (p:Privilege {name: 'MODIFY_TAGS'}), (r:Role {name: 'ROLE_EDITOR'}) CREATE (r) -[:HAS_ACCESS_TO {order: 0}]-> (p)</query>
+        <query>MATCH (p:Privilege {name: 'MODIFY_TYPES'}), (r:Role {name: 'ROLE_EDITOR'}) CREATE (r) -[:HAS_ACCESS_TO {order: 0}]-> (p)</query>
+
+        <query>CREATE (r:Role {name:'ROLE_ADMIN'})</query>
+        <query>MATCH (p:Privilege), (r:Role {name: 'ROLE_ADMIN'}) CREATE (r) -[:HAS_ACCESS_TO {order: 0}]-> (p)</query>
+    </changeset>
+
+    <changeset id="CREATE_USERS" author="jonathan.camargo">
+        <query>CREATE (u:User {username:'admin',
+        						password:'$2a$12$BDkDyb4OqEkiVh0o8.RliO2D7NKwrKyHByNNBUzW.WJE7H47MPnxm',
+        						email:'jongiocam@gmail.com',
+        						status: 'A'})</query>
+        <query>MATCH (u: User {username: 'admin'}), (r:Role {name: 'ROLE_ADMIN'}) CREATE (u) -[:HAS]-> (r)</query>
+    </changeset>
+</changelog>

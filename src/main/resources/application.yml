@@ -1,0 +1,38 @@
+spring:
+    jpa:
+        open-in-view: false
+    h2:
+        console:
+            enabled: true
+    datasource:
+#        url: jdbc:h2:tcp://localhost/~/Seviper
+        jdbc-url: jdbc:h2:mem:testSeviper
+        username: admin
+        password: Asdf963.
+        driver-class-name: org.h2.Driver
+    data:
+        neo4j:
+#            uri: file:/var/tmp/neo4j.db
+            uri: http://localhost:7474
+            username: admin
+            password: Asdf963.
+
+server:
+   port: 8095
+   servlet:
+      contextPath: /H
+
+hibernate:
+    dialect: default
+    current_session_context_class: thread
+
+h:
+   config:
+      jwtSecret: UmFuZG9tIGNoYXJhY3RlciBjb3VudCB0b29sIHNvIHRoZSBzZWNyZXQga2V5IGl0cyBhdCBsZWFzdCAyNTYgY2hhcmFjdGVycyB0byBlbnN1cmUgbWF4aW11bSBzZWN1cml0eQ==
+      jwtExpiration: 30
+      ip:
+         loginAttempts: 1000
+         cronBannedIps: 0 */15 * ? * *
+         minutesBanned: 11
+      user:
+         loginAttempts: 3
